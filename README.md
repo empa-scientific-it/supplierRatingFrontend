@@ -60,7 +60,68 @@ src/app
 └── environments    // Configuration for Dev/Prod (API URLs, etc.)
 ```
 
-## 4. Contributing
+## 4. Getting Started
+
+### 4.1. Prerequisites
+
+- Node.js 20.x and npm
+
+### 4.2. Installation
+
+Clone the repository and install the dependencies:
+
+```bash
+git clone https://github.com/empa-scientific-it/supplierRatingFrontend.git
+cd supplierRatingFrontend
+npm install
+```
+
+### 4.3. Configuration
+
+The backend API base URL is configured per environment in `src/environments/`:
+
+- `environment.ts` (development) → `http://localhost:8080/api/v1` (your local backend)
+- `environment.prod.ts` (production) → `/api/v1` (relative path, behind a reverse proxy)
+
+### 4.4. Run (development)
+
+The frontend needs a running **Backend** and a **local openBIS** instance. Start those first (see the
+[Backend](https://github.com/empa-scientific-it/supplierRatingBackend) and
+[Infrastructure](https://github.com/empa-scientific-it/supplierRatingInfrastructure) repositories for
+the full local setup and the correct startup order), then start the dev server:
+
+```bash
+npm run start:dev
+```
+
+The application runs at `http://localhost:4200` and talks to the backend at `http://localhost:8080/api/v1`.
+Log in with your openBIS username and Personal Access Token (PAT).
+
+### 4.5. Build and API client
+
+- Build a production bundle: `npm run build`
+- The API client in `src/app/openapi-gen` is generated from the backend's OpenAPI spec. If the API
+  changes, regenerate it with `npm run generate:api`.
+
+## 5. Authentication
+
+The application uses a **PAT-based login flow** connecting to openBIS.
+
+**How it works:**
+1. The user enters their openBIS **username** and **Personal Access Token (PAT)**
+   in the login form.
+2. These are sent to the Backend, which validates the PAT against openBIS.
+3. On success, the Backend returns the PAT as a Bearer token.
+4. The Frontend stores this token in memory and attaches it as
+   `Authorization: Bearer <PAT>` to every subsequent API request.
+
+**How to get a PAT:**
+- Log in to your openBIS instance
+- Go to your profile (top right corner) → **Personal Access Tokens**
+- Click **Create new token**, set an expiry date, and copy the generated token
+- Use this token together with your openBIS username to log in
+
+## 6. Contributing
 
 First off, thank you for considering contributing to the Supplier Rating Frontend! 🚀
 
@@ -70,7 +131,7 @@ or **proposing a cool new feature**.
 ### 🤝 How can I contribute?
 
 1. **Found a Bug?**
-  * Ensure the bug was not already reported by searching on GitHub under [Issues](https://github.com/SupplierRatingSoftware/supplierRatingFrontend/issues).
+  * Ensure the bug was not already reported by searching on GitHub under [Issues](https://github.com/empa-scientific-it/supplierRatingFrontend/issues).
   * If not, open a new issue with a clear title and description.
 
 2. **Have a Feature Idea?**
@@ -93,5 +154,5 @@ To keep the codebase clean and maintainable, please keep the following in mind:
 
 Thank you for your support! ❤️
 
-## 5. License
+## 7. License
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
