@@ -6,6 +6,7 @@ import { AppRoutes } from '../../app.routes.config';
 import { ToastComponent } from '../../components/toast/toast.component';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { AUTH_STORAGE_KEYS } from '../../services/auth.service';
 
 /**
  * Dieser Vertrag beschreibt genau, was wir vom Backend erwarten.
@@ -36,9 +37,10 @@ export class LoginComponent {
   private http = inject(HttpClient); // NEU: HttpClient injizieren
 
   /**
-   * Signals for username and password input fields
+   * Signal for the password input field (contains the openBIS Personal Access Token).
+   * No username is needed: the PAT belongs to exactly one openBIS user,
+   * and the backend returns that user after validating the PAT.
    */
-  readonly username = signal('');
   readonly password = signal('');
 
   readonly message = signal<string | null>(null);
@@ -49,7 +51,6 @@ export class LoginComponent {
   onLogin() {
     // 1. Wir bereiten das Paket für das Backend vor
     const loginData = {
-      username: this.username(),
       password: this.password(),
     };
 
@@ -58,8 +59,8 @@ export class LoginComponent {
       next: response => {
         // Wir speichern den Token und den Namen im LocalStorage des Browsers.
         // So "merkt" sich der Browser, dass wir eingeloggt sind.
-        localStorage.setItem('openbis_token', response.token);
-        localStorage.setItem('username', response.username);
+        localStorage.setItem(AUTH_STORAGE_KEYS.TOKEN, response.token);
+        localStorage.setItem(AUTH_STORAGE_KEYS.USERNAME, response.username);
         // Wir leiten den Benutzer zum Dashboard weiter
         this.router.navigate([AppRoutes.BASE, 'dashboard']);
       },

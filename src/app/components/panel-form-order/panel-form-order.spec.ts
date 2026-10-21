@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PanelFormOrder } from './panel-form-order';
+import { PanelFormOrderComponent } from './panel-form-order';
 
 describe('PanelFormOrder', () => {
-  let component: PanelFormOrder;
-  let fixture: ComponentFixture<PanelFormOrder>;
+  let component: PanelFormOrderComponent;
+  let fixture: ComponentFixture<PanelFormOrderComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PanelFormOrder],
+      imports: [PanelFormOrderComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PanelFormOrder);
+    fixture = TestBed.createComponent(PanelFormOrderComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
