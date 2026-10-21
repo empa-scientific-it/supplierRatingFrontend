@@ -57,16 +57,11 @@
       ngbDropdownToggle
       role="button"
       style="cursor: pointer">
-      <!-- TODO: Display dynamic username -->
-      <img alt="" class="rounded-circle me-2" height="32" src="https://github.com/mdo.png" width="32" />
-      <strong class="sidebar-text">Testuser</strong>
+      <i-lucide [img]="User" [strokeWidth]="1.3" class="me-2"></i-lucide>
+      <strong class="sidebar-text">{{ displayName }}</strong>
     </a>
     <ul aria-labelledby="dropdownUser1" class="dropdown-menu text-small shadow" ngbDropdownMenu>
-      <li><a class="dropdown-item" href="#">Settings</a></li>
-      <li>
-        <hr class="dropdown-divider" />
-      </li>
-      <li><a class="dropdown-item" href="#">Sign out</a></li>
+      <li><button class="dropdown-item" type="button" (click)="logout()">Abmelden</button></li>
     </ul>
   </div>
 </aside>
