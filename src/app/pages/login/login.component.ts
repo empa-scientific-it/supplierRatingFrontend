@@ -36,9 +36,10 @@ export class LoginComponent {
   private http = inject(HttpClient); // NEU: HttpClient injizieren
 
   /**
-   * Signals for username and password input fields
+   * Signal for the password input field (contains the openBIS Personal Access Token).
+   * No username is needed: the PAT belongs to exactly one openBIS user,
+   * and the backend returns that user after validating the PAT.
    */
-  readonly username = signal('');
   readonly password = signal('');
 
   readonly message = signal<string | null>(null);
@@ -49,7 +50,6 @@ export class LoginComponent {
   onLogin() {
     // 1. Wir bereiten das Paket für das Backend vor
     const loginData = {
-      username: this.username(),
       password: this.password(),
     };
 
