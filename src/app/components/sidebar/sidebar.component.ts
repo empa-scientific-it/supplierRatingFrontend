@@ -4,6 +4,7 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutes } from '../../app.routes.config';
 import { ChevronLeft, ChevronRight, LayoutDashboard, LucideAngularModule, NotepadText, User } from 'lucide-angular';
 import { SidebarService } from '../../services/sidebar.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -14,6 +15,7 @@ import { SidebarService } from '../../services/sidebar.service';
 })
 export class SidebarComponent {
   private sidebarService = inject(SidebarService);
+  private authService = inject(AuthService);
   private destroyRef = inject(DestroyRef);
 
   /**
@@ -41,6 +43,12 @@ export class SidebarComponent {
    * @protected
    */
   protected readonly baseRoute = AppRoutes.BASE;
+
+  /**
+   * Readable name of the logged-in user, e.g. "Anusch Bachofner"
+   * @protected
+   */
+  protected readonly displayName = this.authService.getDisplayName();
 
   constructor() {
     // Auto-expand sidebar on larger screens
@@ -70,5 +78,12 @@ export class SidebarComponent {
    */
   toggleSidebar() {
     this.isCollapsed.update(value => !value);
+  }
+
+  /**
+   * Log out the user and return to the login page
+   */
+  logout() {
+    this.authService.logout();
   }
 }
